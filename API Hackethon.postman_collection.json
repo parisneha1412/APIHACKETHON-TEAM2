@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"password\": \"test\",\n  \"userLoginEmail\": \"Team2@gmail.com\"\n}\n",
+					"raw": "{\n  \"password\": \"test\",\n  \"userLoginEmail\": \"Team14@gmail.com\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -363,58 +363,6 @@
 							"    pm.expect(pm.response.responseTime).to.be.below(300);",
 							"});",
 							"",
-							"// Validate the data type of response",
-							"pm.test(\"Test data type of response\", function () {",
-							"    pm.expect(jsonData).to.be.an('object');",
-							"",
-							"    // Check existence before testing the type",
-							"    pm.expect(jsonData).to.have.property('patientId').that.is.a('number');",
-							"    pm.expect(jsonData).to.have.property('FirstName').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('LastName').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('ContactNumber').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('Email').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('Allergy').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('FoodPreference').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('CuisineCategory').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('DateOfBirth').that.is.a('string');",
-							"    pm.expect(jsonData).to.have.property('DieticianId').that.is.a('number');",
-							"    pm.expect(jsonData).to.have.property('LastVisitDate').that.is.a('string');",
-							"",
-							"    // Check types in FileMorbidity object if it exists",
-							"    if (jsonData.FileMorbidity) {",
-							"        pm.expect(jsonData.FileMorbidity).to.be.an('object');",
-							"        Object.keys(jsonData.FileMorbidity).forEach(function (key) {",
-							"            var fileMorbidity = jsonData.FileMorbidity[key];",
-							"            pm.expect(fileMorbidity).to.be.an('object');",
-							"            Object.keys(fileMorbidity).forEach(function (innerKey) {",
-							"                pm.expect(fileMorbidity[innerKey]).to.be.a('string'); // Assuming values are strings",
-							"            });",
-							"        });",
-							"    }",
-							"",
-							"    // Check types in FileMorbidityCondition object if it exists",
-							"    if (jsonData.FileMorbidityCondition) {",
-							"        pm.expect(jsonData.FileMorbidityCondition).to.be.an('object');",
-							"        Object.keys(jsonData.FileMorbidityCondition).forEach(function (key) {",
-							"            pm.expect(jsonData.FileMorbidityCondition[key]).to.be.a('string');",
-							"        });",
-							"    }",
-							"",
-							"    // Check types in Vitals object if it exists",
-							"    if (jsonData.Vitals) {",
-							"        pm.expect(jsonData.Vitals).to.be.an('object');",
-							"        Object.keys(jsonData.Vitals).forEach(function (key) {",
-							"            var vitals = jsonData.Vitals[key];",
-							"            pm.expect(vitals).to.be.an('object');",
-							"            console.log(vitals); // Log the Vitals object",
-							"            if (vitals.Weight !== undefined) pm.expect(vitals.Weight).to.be.a('number');",
-							"            if (vitals.Height !== undefined) pm.expect(vitals.Height).to.be.a('number');",
-							"            if (vitals.Temperature !== undefined) pm.expect(vitals.Temperature).to.be.a('number');",
-							"            if (vitals.SP !== undefined) pm.expect(vitals.SP).to.be.a('number');",
-							"            if (vitals.DP !== undefined) pm.expect(vitals.DP).to.be.a('number');",
-							"        });",
-							"    }",
-							"});",
 							"",
 							"// JSON schema validator",
 							"const schema = {",
@@ -503,14 +451,14 @@
 							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
 							"});",
 							"pm.test(\"values of the field in response\",()=> {",
-							"    pm.expect(jsonData.patientId).to.equal(512);",
+							"    pm.expect(jsonData.patientId).to.equal(735);",
 							" pm.expect(jsonData.FirstName).to.equal(\"adam\");",
 							"    pm.expect(jsonData.LastName).to.equal(\"Hacktwo\");",
 							"    pm.expect(jsonData.ContactNumber).to.equal(\"9962743812\");",
 							"    pm.expect(jsonData.Email).to.equal(\"adam7@gmail.com\");",
 							"    pm.expect(jsonData.Allergy).to.equal(\"WALNUT\");",
 							"    pm.expect(jsonData.FoodPreference).to.equal(\"Vegan\");",
-							"    pm.expect(jsonData.CuisineCategory).to.equal(\"Indian\");",
+							"    pm.expect(jsonData.CuisineCategory).to.equal(\"kerala\");",
 							"    pm.expect(jsonData.DateOfBirth).to.equal(\"1978-03-14\");",
 							"    pm.expect(jsonData.DieticianId).to.equal(808);",
 							"    pm.expect(jsonData.LastVisitDate).to.equal(\"2024-08-03T16:11:49.857+00:00\");",
@@ -536,7 +484,37 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							""
+							"// Define arrays for cuisine categories and food preferences",
+							"var cuisineCategories = [",
+							"    \"Indian\", \"South Indian\", \"Rajasthani\", \"Punjabi\", \"Bengali\", \"Orissa\",",
+							"    \"Gujarati\", \"Maharashtrian\", \"Andhra\", \"Kerala\", \"Goan\", \"Kashmiri\",",
+							"    \"Himachali\", \"Tamil Nadu\", \"Karnataka\", \"Sindhi\", \"Chhattisgarhi\",",
+							"    \"Madhya Pradesh\", \"Assamese\", \"Manipuri\", \"Tripuri\", \"Sikkimese\",",
+							"    \"Mizo\", \"Arunachali\", \"Uttarakhand\", \"Haryanvi\", \"Awadhi\", \"Bihari\",",
+							"    \"Uttar Pradesh\", \"Delhi\", \"North Indian\", \"Italian\", \"French\", \"Arabic\",",
+							"    \"Lebanese\", \"Thai\", \"Mexican\", \"American\"",
+							"];",
+							"",
+							"var foodPreferences = [",
+							"    \"Vegan\", \"Vegetarian\", \"Jain\", \"Eggitarian\", \"NonVeg\"",
+							"];",
+							"",
+							"// Function to get a random element from an array",
+							"function getRandomElement(arr) {",
+							"    return arr[Math.floor(Math.random() * arr.length)];",
+							"}",
+							"",
+							"// Randomly select a cuisine category and food preference",
+							"var selectedCuisineCategory = getRandomElement(cuisineCategories);",
+							"var selectedFoodPreference = getRandomElement(foodPreferences);",
+							"",
+							"// Set the variables in Postman",
+							"pm.variables.set(\"CuisineCategory\", selectedCuisineCategory);",
+							"pm.variables.set(\"FoodPreference\", selectedFoodPreference);",
+							"",
+							"// Log the selected values for debugging",
+							"console.log(\"Selected Cuisine Category: \" + selectedCuisineCategory);",
+							"console.log(\"Selected Food Preference: \" + selectedFoodPreference);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -561,24 +539,23 @@
 					"formdata": [
 						{
 							"key": "patientInfo",
-							"value": "{ \"FirstName\": \"adam\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9962743812\",\n\"Email\": \"adam7@gmail.com\",\n\"Allergy\": \"WALNUT\",\n\"FoodPreference\": \"Vegan\",\n\"CuisineCategory\":\"Indian\",\n\"DateOfBirth\": \"1978-03-14\"\n}",
+							"value": "{ \"FirstName\": \"adam\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9962743812\",\n\"Email\": \"adam7@gmail.com\",\n\"Allergy\": \"EGG\",\n\"FoodPreference\": \"{{FoodPreference}}\",\n\"CuisineCategory\":\"{{CuisineCategory}}\",\n\"DateOfBirth\": \"1978-03-14\"\n}",
 							"type": "text"
 						},
 						{
 							"key": "file",
 							"type": "file",
-							"src": "postman-cloud:///1ef51b31-f8fa-4c40-a429-ea0b7e9f11ed",
-							"disabled": true
+							"src": "postman-cloud:///1ef51b31-f8fa-4c40-a429-ea0b7e9f11ed"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{baseUrl}}patient/512",
+					"raw": "{{baseUrl}}patient/735",
 					"host": [
 						"{{baseUrl}}patient"
 					],
 					"path": [
-						"512"
+						"735"
 					]
 				}
 			},
@@ -605,16 +582,11 @@
 							]
 						},
 						"url": {
-							"raw": "https://dietician-july-api-hackathon-80f2590665cc.herokuapp.com/dietician/patient/124",
-							"protocol": "https",
+							"raw": "{{baseUrl}}patient/124",
 							"host": [
-								"dietician-july-api-hackathon-80f2590665cc",
-								"herokuapp",
-								"com"
+								"{{baseUrl}}patient"
 							],
 							"path": [
-								"dietician",
-								"patient",
 								"124"
 							]
 						}
