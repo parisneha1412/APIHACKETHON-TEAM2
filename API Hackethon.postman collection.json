@@ -1,0 +1,1189 @@
+{
+	"info": {
+		"_postman_id": "235b3543-0572-4975-a980-a3f0c3cbaa9b",
+		"name": "API Hackethon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26275755"
+	},
+	"item": [
+		{
+			"name": "New Folder",
+			"item": []
+		},
+		{
+			"name": "Admin token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"res = JSON.parse(responseBody)",
+							"value = res.token",
+							"console.log(value)",
+							"pm.collectionVariables.set(\"Admintoken\", value);",
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"token\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"test\",\n  \"userLoginEmail\": \"Team2@gmail.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}login",
+					"host": [
+						"{{baseUrl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Ditecian",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"res = JSON.parse(responseBody)",
+							"value = res.id",
+							"console.log(value)",
+							"pm.collectionVariables.set(\"dieticianId\", value);",
+							"",
+							"value1 = res.loginPassword",
+							"console.log(value1)",
+							"pm.collectionVariables.set(\"DieticianPassword\", value1);",
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"id\");",
+							"",
+							"value2 = res.Email",
+							"console.log(value2)",
+							"pm.collectionVariables.set(\"DieticianEmail\", value2);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Admintoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ContactNumber\": \"9872942901\",\n  \"DateOfBirth\": \"1991-07-25T18:14:08.570Z\",\n  \"Education\": \"BE\",\n  \"Email\": \"Mclean2@gmail.com\",\n  \"Firstname\": \"Mclean\",\n  \"HospitalCity\": \"1518\",\n  \"HospitalName\": \"shore\",\n  \"HospitalPincode\": \"413515\",\n  \"HospitalStreet\": \"sw road\",\n  \"Lastname\": \"Lincon\"\n \n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}dietician",
+					"host": [
+						"{{baseUrl}}dietician"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Ditecian token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"res = JSON.parse(responseBody)",
+							"value = res.token",
+							"console.log(value)",
+							"pm.collectionVariables.set(\"Dieticiantoken\", value);",
+							"",
+							"pm.test(\"Body contains string\",() => {",
+							"  pm.expect(pm.response.text()).to.include(\"token\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"{{DieticianPassword}}\",\n  \"userLoginEmail\": \"{{DieticianEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}login",
+					"host": [
+						"{{baseUrl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Newpatient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"}else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"}else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"error: \"+jsonData.error,()=>{",
+							"    console.log(\"Error is: \",jsonData.error);",
+							"});}",
+							"}",
+							" pm.test(\"Content-type header is present\", () => {",
+							"    pm.response.to.have.header(\"Content-type\");",
+							"});",
+							"",
+							"pm.test(\"Content-type header is application/json\", () => {",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.equal('application/json');",
+							"});",
+							"",
+							"pm.test(\"response time is less than 200ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"",
+							"res = JSON.parse(responseBody)",
+							"value3 = res.patientId",
+							"console.log(value3)",
+							"pm.collectionVariables.set(\"newpatientID\", value3);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo\n",
+							"value": "{ \"FirstName\": \"adam\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9962743812\",\n\"Email\": \"adam7@gmail.com\",\n\"Allergy\": \"SOY\",\n\"FoodPreference\": \"Vegan\",\n\"CuisineCategory\":\"Indian\",\n\"DateOfBirth\": \"1978-03-14\"\n}",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman-cloud:///1ef51b30-8334-4bb0-946e-21610c53811f"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}patient/",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update patient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"// Log the jsonData for debugging",
+							"console.log(jsonData);",
+							"",
+							"// Status code validation",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"error: \" + jsonData.error, function () {",
+							"            console.log(\"Error is: \", jsonData.error);",
+							"        });",
+							"    }",
+							"}",
+							"",
+							"// Header validation",
+							"pm.test(\"Content-type header is present\", function () {",
+							"    pm.response.to.have.header(\"Content-type\");",
+							"});",
+							"",
+							"pm.test(\"Content-type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.equal('application/json');",
+							"});",
+							"",
+							"pm.test(\"response time is less than 300ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});",
+							"",
+							"// Validate the data type of response",
+							"pm.test(\"Test data type of response\", function () {",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"",
+							"    // Check existence before testing the type",
+							"    pm.expect(jsonData).to.have.property('patientId').that.is.a('number');",
+							"    pm.expect(jsonData).to.have.property('FirstName').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('LastName').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('ContactNumber').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('Email').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('Allergy').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('FoodPreference').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('CuisineCategory').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('DateOfBirth').that.is.a('string');",
+							"    pm.expect(jsonData).to.have.property('DieticianId').that.is.a('number');",
+							"    pm.expect(jsonData).to.have.property('LastVisitDate').that.is.a('string');",
+							"",
+							"    // Check types in FileMorbidity object if it exists",
+							"    if (jsonData.FileMorbidity) {",
+							"        pm.expect(jsonData.FileMorbidity).to.be.an('object');",
+							"        Object.keys(jsonData.FileMorbidity).forEach(function (key) {",
+							"            var fileMorbidity = jsonData.FileMorbidity[key];",
+							"            pm.expect(fileMorbidity).to.be.an('object');",
+							"            Object.keys(fileMorbidity).forEach(function (innerKey) {",
+							"                pm.expect(fileMorbidity[innerKey]).to.be.a('string'); // Assuming values are strings",
+							"            });",
+							"        });",
+							"    }",
+							"",
+							"    // Check types in FileMorbidityCondition object if it exists",
+							"    if (jsonData.FileMorbidityCondition) {",
+							"        pm.expect(jsonData.FileMorbidityCondition).to.be.an('object');",
+							"        Object.keys(jsonData.FileMorbidityCondition).forEach(function (key) {",
+							"            pm.expect(jsonData.FileMorbidityCondition[key]).to.be.a('string');",
+							"        });",
+							"    }",
+							"",
+							"    // Check types in Vitals object if it exists",
+							"    if (jsonData.Vitals) {",
+							"        pm.expect(jsonData.Vitals).to.be.an('object');",
+							"        Object.keys(jsonData.Vitals).forEach(function (key) {",
+							"            var vitals = jsonData.Vitals[key];",
+							"            pm.expect(vitals).to.be.an('object');",
+							"            console.log(vitals); // Log the Vitals object",
+							"            if (vitals.Weight !== undefined) pm.expect(vitals.Weight).to.be.a('number');",
+							"            if (vitals.Height !== undefined) pm.expect(vitals.Height).to.be.a('number');",
+							"            if (vitals.Temperature !== undefined) pm.expect(vitals.Temperature).to.be.a('number');",
+							"            if (vitals.SP !== undefined) pm.expect(vitals.SP).to.be.a('number');",
+							"            if (vitals.DP !== undefined) pm.expect(vitals.DP).to.be.a('number');",
+							"        });",
+							"    }",
+							"});",
+							"",
+							"// JSON schema validator",
+							"const schema = {",
+							"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"patientId\": { \"type\": \"integer\" },",
+							"        \"FirstName\": { \"type\": \"string\" },",
+							"        \"LastName\": { \"type\": \"string\" },",
+							"        \"ContactNumber\": { \"type\": \"string\" },",
+							"        \"Email\": { \"type\": \"string\" },",
+							"        \"Allergy\": { \"type\": \"string\" },",
+							"        \"FoodPreference\": { \"type\": \"string\" },",
+							"        \"CuisineCategory\": { \"type\": \"string\" },",
+							"        \"FileMorbidity\": {",
+							"            \"type\": \"object\",",
+							"            \"properties\": {",
+							"                \"66ae56c5b8896d2890f4973e\": {",
+							"                    \"type\": \"object\",",
+							"                    \"properties\": {",
+							"                        \"T3\": { \"type\": \"string\" },",
+							"                        \"T4\": { \"type\": \"string\" },",
+							"                        \"TSH\": { \"type\": \"string\" }",
+							"                    },",
+							"                    \"required\": [\"T3\", \"T4\", \"TSH\"]",
+							"                },",
+							"                \"66ae56f0b8896d2890f49742\": {",
+							"                    \"type\": \"object\",",
+							"                    \"properties\": {",
+							"                        \"HbA1c\": { \"type\": \"string\" },",
+							"                        \"Average Glucose\": { \"type\": \"string\" }",
+							"                    },",
+							"                    \"required\": [\"HbA1c\", \"Average Glucose\"]",
+							"                }",
+							"            },",
+							"            \"required\": [\"66ae56c5b8896d2890f4973e\", \"66ae56f0b8896d2890f49742\"]",
+							"        },",
+							"        \"FileMorbidityCondition\": {",
+							"            \"type\": \"object\",",
+							"            \"properties\": {",
+							"                \"66ae56c5b8896d2890f4973e\": { \"type\": \"string\" },",
+							"                \"66ae56f0b8896d2890f49742\": { \"type\": \"string\" }",
+							"            },",
+							"            \"required\": [\"66ae56c5b8896d2890f4973e\", \"66ae56f0b8896d2890f49742\"]",
+							"        },",
+							"        \"DateOfBirth\": { \"type\": \"string\" },",
+							"        \"DieticianId\": { \"type\": \"integer\" },",
+							"        \"Vitals\": {",
+							"            \"type\": \"object\",",
+							"            \"properties\": {",
+							"                \"66ae56c5b8896d2890f4973e\": {",
+							"                    \"type\": \"object\",",
+							"                    \"properties\": {",
+							"                        \"Weight\": { \"type\": \"number\" },",
+							"                        \"Height\": { \"type\": \"number\" },",
+							"                        \"Temperature\": { \"type\": \"number\" },",
+							"                        \"SP\": { \"type\": \"integer\" },",
+							"                        \"DP\": { \"type\": \"integer\" }",
+							"                    },",
+							"                    \"required\": [\"Weight\", \"Height\", \"Temperature\", \"SP\", \"DP\"]",
+							"                }",
+							"            },",
+							"            \"required\": [\"66ae56c5b8896d2890f4973e\"]",
+							"        },",
+							"        \"LastVisitDate\": { \"type\": \"string\" }",
+							"    },",
+							"    \"required\": [",
+							"        \"patientId\",",
+							"        \"FirstName\",",
+							"        \"LastName\",",
+							"        \"ContactNumber\",",
+							"        \"Email\",",
+							"        \"Allergy\",",
+							"        \"FoodPreference\",",
+							"        \"CuisineCategory\",",
+							"        \"FileMorbidity\",",
+							"        \"FileMorbidityCondition\",",
+							"        \"DateOfBirth\",",
+							"        \"DieticianId\",",
+							"        \"Vitals\",",
+							"        \"LastVisitDate\"",
+							"    ]",
+							"};",
+							"",
+							"pm.test('schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"pm.test(\"values of the field in response\",()=> {",
+							"    pm.expect(jsonData.patientId).to.equal(512);",
+							" pm.expect(jsonData.FirstName).to.equal(\"adam\");",
+							"    pm.expect(jsonData.LastName).to.equal(\"Hacktwo\");",
+							"    pm.expect(jsonData.ContactNumber).to.equal(\"9962743812\");",
+							"    pm.expect(jsonData.Email).to.equal(\"adam7@gmail.com\");",
+							"    pm.expect(jsonData.Allergy).to.equal(\"WALNUT\");",
+							"    pm.expect(jsonData.FoodPreference).to.equal(\"Vegan\");",
+							"    pm.expect(jsonData.CuisineCategory).to.equal(\"Indian\");",
+							"    pm.expect(jsonData.DateOfBirth).to.equal(\"1978-03-14\");",
+							"    pm.expect(jsonData.DieticianId).to.equal(808);",
+							"    pm.expect(jsonData.LastVisitDate).to.equal(\"2024-08-03T16:11:49.857+00:00\");",
+							"    pm.expect(data.fileId).to.equal(\"66ae75dcb8896d2890f4979c\");",
+							"    pm.expect(data.fileName).to.equal(\"Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf\");",
+							"    pm.expect(data.uploadDate).to.equal(\"2024-08-03T18:24:28.681+00:00\");",
+							"    pm.expect(data.morbidConditions.HbA1c).to.equal(\"6.5 %\");",
+							"    pm.expect(data.morbidConditions[\"Average Glucose\"]).to.equal(\"131.0 mg/dl\");",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{ \"FirstName\": \"adam\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9962743812\",\n\"Email\": \"adam7@gmail.com\",\n\"Allergy\": \"WALNUT\",\n\"FoodPreference\": \"Vegan\",\n\"CuisineCategory\":\"Indian\",\n\"DateOfBirth\": \"1978-03-14\"\n}",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman-cloud:///1ef51b31-f8fa-4c40-a429-ea0b7e9f11ed",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}patient/512",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"512"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update patient",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{ \"FirstName\": \"adam12\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9860942801\",\n\"Email\": \"adam@gmail.com\",\n\"Allergy\": \"SOY\",\n\"FoodPreference\": \"Vegetarian\",\n\"CuisineCategory\":\"Indian\",\n\"DateOfBirth\": \"1988-03-14\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://dietician-july-api-hackathon-80f2590665cc.herokuapp.com/dietician/patient/124",
+							"protocol": "https",
+							"host": [
+								"dietician-july-api-hackathon-80f2590665cc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"dietician",
+								"patient",
+								"124"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "patients details by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"// Log the jsonData for debugging",
+							"console.log(jsonData);",
+							"",
+							"// Status code validation",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"error: \" + jsonData.error, function () {",
+							"            console.log(\"Error is: \", jsonData.error);",
+							"        });",
+							"    }",
+							"}",
+							"",
+							"// Header validation",
+							"pm.test(\"Content-type header is present\", function () {",
+							"    pm.response.to.have.header(\"Content-type\");",
+							"});",
+							"",
+							"pm.test(\"Content-type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.equal('application/json');",
+							"});",
+							"",
+							"pm.test(\"response time is less than 300ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});",
+							"",
+							"const schema = {",
+							"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"    \"type\": \"array\",",
+							"    \"items\": {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"fileId\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"fileName\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"uploadDate\": {",
+							"                \"type\": \"string\"",
+							"            },",
+							"            \"morbidConditions\": {",
+							"                \"type\": \"object\",",
+							"                \"properties\": {",
+							"                    \"HbA1c\": {",
+							"                        \"type\": \"string\"",
+							"                    },",
+							"                    \"Average Glucose\": {",
+							"                        \"type\": \"string\"",
+							"                    }",
+							"                },",
+							"                \"required\": [",
+							"                    \"HbA1c\",",
+							"                    \"Average Glucose\"",
+							"                ]",
+							"            },",
+							"            \"morbidConditionStr\": {",
+							"                \"type\": \"string\"",
+							"            }",
+							"        },",
+							"        \"required\": [",
+							"            \"fileId\",",
+							"            \"fileName\",",
+							"            \"uploadDate\",",
+							"            \"morbidConditions\",",
+							"            \"morbidConditionStr\"",
+							"        ]",
+							"    }",
+							"};",
+							"",
+							"pm.test('schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"// Value validation",
+							"pm.test(\"values of the field in response\", () => {",
+							"    ",
+							"    const data = jsonData[0];",
+							"    ",
+							"    pm.expect(data.fileId).to.equal(\"66ae75dcb8896d2890f4979c\");",
+							"    pm.expect(data.fileName).to.equal(\"Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf\");",
+							"    pm.expect(data.uploadDate).to.equal(\"2024-08-03T18:24:28.681+00:00\");",
+							"    pm.expect(data.morbidConditions.HbA1c).to.equal(\"6.5 %\");",
+							"    pm.expect(data.morbidConditions[\"Average Glucose\"]).to.equal(\"131.0 mg/dl\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}patient/testReports/512",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"testReports",
+						"512"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patient details by file id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"// Log the jsonData for debugging",
+							"console.log(jsonData);",
+							"",
+							"// Status code validation",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\", jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"message: \" + jsonData.message, function () {",
+							"            console.log(\"Message is: \", jsonData.message);",
+							"        });",
+							"    }",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if (jsonData != null) {",
+							"        pm.test(\"error: \" + jsonData.error, function () {",
+							"            console.log(\"Error is: \", jsonData.error);",
+							"        });",
+							"    }",
+							"}",
+							"",
+							"// Header validation",
+							"pm.test(\"Content-type header is present\", function () {",
+							"    pm.response.to.have.header(\"Content-type\");",
+							"});",
+							"",
+							"pm.test(\"Content-type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.equal('application/json');",
+							"});",
+							"",
+							"pm.test(\"response time is less than 300ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}patient/testReports/viewFile/66ab90693e6c022b073da1eb",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"testReports",
+						"viewFile",
+						"66ab90693e6c022b073da1eb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}patient/124",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"}else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"}else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"error: \"+jsonData.error,()=>{",
+							"    console.log(\"Error is: \",jsonData.error);",
+							"});}",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{ \"FirstName\": \"adam12\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9860942804\",\n\"Email\": \"adam@gmail.com\",\n\"Allergy\": \"pistachio\",\n\"FoodPreference\": \"Vegetarian\",\n\"CuisineCategory\":\"karnataka\",\n\"DateOfBirth\": \"1988-03-18\"\n}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}patient/124",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"124"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}patient/124",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"if (pm.response.code === 200) {",
+							"    pm.test(\"Verify the expected status code is 200\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"}else if (pm.response.code === 201) {",
+							"    pm.test(\"Verify the expected status code is 201\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set(\"dieticianId\", jsonData.id);",
+							"    pm.collectionVariables.set(\"dieticianPassword\",jsonData.loginPassword);",
+							"} else if (pm.response.code === 401) {",
+							"    pm.test(\"Validate status code 401\", function () {",
+							"        pm.response.to.have.status(401);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else if (pm.response.code === 400) {",
+							"    pm.test(\"Validate status code 400\", function () {",
+							"        pm.response.to.have.status(400);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"}else if (pm.response.code === 404) {",
+							"    pm.test(\"Validate Status code is 404\", function () {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"message: \"+jsonData.message,()=>{",
+							"    console.log(\"Message is: \",jsonData.message);",
+							"});}",
+							"} else {",
+							"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
+							"        pm.expect(pm.response.code).to.be.oneOf([500, 503]);",
+							"    });",
+							"    if(jsonData!=null){",
+							"    pm.test(\"error: \"+jsonData.error,()=>{",
+							"    console.log(\"Error is: \",jsonData.error);",
+							"});}",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Dieticiantoken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{ \"FirstName\": \"adam12\",\n\"LastName\": \"Hacktwo\",\n\"ContactNumber\": \"9860942801\",\n\"Email\": \"adam@gmail.com\",\n\"Allergy\": \"SOY\",\n\"FoodPreference\": \"Vegetarian\",\n\"CuisineCategory\":\"Indian\",\n\"DateOfBirth\": \"1988-03-14\"\n}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}patient/124",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"124"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}patient/124",
+					"host": [
+						"{{baseUrl}}patient"
+					],
+					"path": [
+						"124"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "https://dietician-july-api-hackathon-80f2590665cc.herokuapp.com/dietician",
+			"value": "hackathon"
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://dietician-july-api-hackathon-80f2590665cc.herokuapp.com/dietician/"
+		},
+		{
+			"key": "Admintoken",
+			"value": ""
+		},
+		{
+			"key": "dieticianId",
+			"value": ""
+		},
+		{
+			"key": "DieticianPassword",
+			"value": ""
+		},
+		{
+			"key": "Dieticiantoken",
+			"value": ""
+		},
+		{
+			"key": "dieticianPassword",
+			"value": ""
+		},
+		{
+			"key": "DieticianEmail",
+			"value": ""
+		}
+	]
+}
