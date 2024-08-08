@@ -804,7 +804,7 @@
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"",
-							"// Log the jsonData for debugging",
+							//"// Log the jsonData for debugging",
 							"console.log(jsonData);",
 							"",
 							"// Status code validation",
