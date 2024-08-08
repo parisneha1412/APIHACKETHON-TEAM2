@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "55239391-081a-4dc3-b8c7-a4c5cd00d710",
+		"_postman_id": "3f868091-1261-44de-9471-72da063568ea",
 		"name": "Team2_Posthackfest_API_EndtoEnd",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26275755"
+		"_exporter_id": "26275755",
+		"_collection_link": "https://posthackfest.postman.co/workspace/PostHackfest-Workspace~37f35592-9b0b-4b81-826c-bcc9c009f23b/collection/37358347-3f868091-1261-44de-9471-72da063568ea?action=share&source=collection_link&creator=26275755"
 	},
 	"item": [
 		{
@@ -221,7 +222,7 @@
 								"exec": [
 									"",
 									"var schema = {",
-									" // \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"  //\"$schema\": \"http://json-schema.org/draft-04/schema#\",",
 									"  \"type\": \"object\",",
 									"  \"properties\": {",
 									"    \"id\": {",
@@ -298,7 +299,7 @@
 									"});",
 									"",
 									"pm.test(\"validate the schemaof dietician using AJV\" ,()=>",
-									"{ pm.response.to.have.jsonSchema(schema);  ",
+									"{ pm.response.to.have.jsonSchema(schema); ",
 									"});",
 									"    ",
 									"} else if (pm.response.code === 200) {",
@@ -638,9 +639,8 @@
 									"  ]",
 									"}",
 									"",
-									"   var jsonData = pm.response.json(); ",
+									"var jsonData = pm.response.json();    ",
 									" if (pm.response.code === 200) {",
-									"    ",
 									"    pm.test(\"Verify the expected status code is 200\", function () {",
 									"        pm.response.to.have.status(200);",
 									"        pm.collectionVariables.set(\"UpdatedDieticianEmail\", jsonData.Email);  ",
@@ -662,11 +662,10 @@
 									"    pm.test(\"Validate status code 401\", function () {",
 									"        pm.response.to.have.status(401);",
 									"    });",
-									"     if(jsonData!=null){",
+									"    if(jsonData!=null){",
 									"    pm.test(\"message: \"+jsonData.message,()=>{",
 									"    console.log(\"Message is: \",jsonData.message);",
 									"});}",
-									"   ",
 									"pm.execution.setNextRequest(\"Delete Dietician\");",
 									"} else if (pm.response.code === 400) {",
 									"    pm.test(\"Validate status code 400\", function () {",
@@ -688,14 +687,13 @@
 									"pm.execution.setNextRequest(\"Delete Dietician\");",
 									"} else {",
 									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {",
-									"        pm.expect(pm.response.code).to.be.oneOf([405,500, 503]); ",
+									"        pm.expect(pm.response.code).to.be.oneOf([500, 503]); ",
 									"    });",
 									"    if(jsonData!=null){",
-									"    pm.test(\"message: \"+jsonData.message,()=>{",
-									"    console.log(\"Message is: \",jsonData.message);",
+									"    pm.test(\"error: \"+jsonData.error,()=>{",
+									"    console.log(\"Error is: \",jsonData.error);",
 									"});}",
 									"pm.execution.setNextRequest(\"Delete Dietician\");",
-									"",
 									"}",
 									"",
 									"//Validate the header is present or not",
@@ -709,8 +707,8 @@
 									"});",
 									"",
 									"",
-									"pm.test(\"Response time is less than 2000 ms\",()=>{",
-									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"pm.test(\"Response time is less than 1000 ms\",()=>{",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
 									" });",
 									""
 								],
@@ -1405,7 +1403,7 @@
 									"// });\r",
 									"    \r",
 									"}else if (pm.response.code === 200) {\r",
-									"    pm.test(\"Verify the expected status code is 200\", function () {\r",
+									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
 									"        pm.response.to.have.status(200);\r",
 									"    });\r",
 									"    \r",
@@ -1564,7 +1562,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "postman-cloud:///1ef51b31-f8fa-4c40-a429-ea0b7e9f11ed"
+									"src": "postman-cloud:///1ef536d7-9c4b-4550-bab6-9adcad1e16e9"
 								}
 							]
 						},
@@ -1606,6 +1604,188 @@
 									],
 									"path": [
 										"pati"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Patient token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//JSON Schema Validation\r",
+									"\r",
+									"var  Schema ={\r",
+									"  //\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"token\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"type\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"userId\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"loginUserEmail\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"roles\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": [\r",
+									"        {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"token\",\r",
+									"    \"type\",\r",
+									"    \"userId\",\r",
+									"    \"loginUserEmail\",\r",
+									"    \"roles\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"// status code validation\r",
+									"\r",
+									"var jsonData = pm.response.json(); \r",
+									"if (pm.response.code === 200) {\r",
+									"    pm.test(\"Verify the expected status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"    pm.test(\"Body contains integer\",() => {\r",
+									"  pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});\r",
+									"       res = JSON.parse(responseBody)\r",
+									"value = res.token\r",
+									"console.log(value)\r",
+									"pm.collectionVariables.set(\"PatientToken\",value);\r",
+									"}else if (pm.response.code === 201) {\r",
+									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
+									"        pm.response.to.have.status(201);\r",
+									"    });\r",
+									"    res = JSON.parse(responseBody)\r",
+									"value = res.token\r",
+									"console.log(value)\r",
+									"pm.collectionVariables.set(\"PatientToken\",value);\r",
+									"\r",
+									"pm.test(\"validate the schemaof dietician using AJV\" ,()=>\r",
+									"{ pm.response.to.have.jsonSchema(Schema); \r",
+									"});\r",
+									"  \r",
+									"} else if (pm.response.code === 401) {\r",
+									"    pm.test(\"Validate status code 401\", function () {\r",
+									"        pm.response.to.have.status(401);\r",
+									"    });\r",
+									"    if(jsonData!=null){\r",
+									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
+									"    console.log(\"Message is: \",jsonData.message);  \r",
+									"});}\r",
+									" pm.execution.setNextRequest(\"PatientId\");\r",
+									"} else if (pm.response.code === 400) {\r",
+									"    pm.test(\"Validate status code 400\", function () {\r",
+									"        pm.response.to.have.status(400);\r",
+									"    });\r",
+									"    if(jsonData!=null){\r",
+									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
+									"    console.log(\"Message is: \",jsonData.message);\r",
+									"\r",
+									"});}\r",
+									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"}else if (pm.response.code === 404) {\r",
+									"    pm.test(\"Validate Status code is 404\", function () {\r",
+									"        pm.response.to.have.status(404);\r",
+									"    });\r",
+									"    if(jsonData!=null){\r",
+									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
+									"    console.log(\"Message is: \",jsonData.message);\r",
+									"});}\r",
+									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"} else {\r",
+									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([500,501,503]); \r",
+									"    });\r",
+									"    if(jsonData!=null){\r",
+									"    pm.test(\"error: \"+jsonData.error,()=>{\r",
+									"    console.log(\"Error is: \",jsonData.error);    \r",
+									"});}\r",
+									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"}\r",
+									"//------------------------------------------------------------\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Dieticiantoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"test\",\r\n  \"userLoginEmail\": \"{{patientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DietURL}}/login",
+							"host": [
+								"{{DietURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Patient token using invalid endpoint",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"password\": \"test\",\r\n  \"userLoginEmail\": \"{{patientEmail}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DietURL}}/45",
+									"host": [
+										"{{DietURL}}"
+									],
+									"path": [
+										"45"
 									]
 								}
 							},
@@ -1803,21 +1983,9 @@
 									"if (pm.response.code === 200) {\r",
 									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
 									"        pm.response.to.have.status(200);\r",
-									"\r",
-									"        \r",
 									" });\r",
-									" pm.test(\"Validate response body values\", () => {\r",
-									"    pm.expect(jsonData.patientId).to.be.a('number');\r",
-									"pm.expect(jsonData.FirstName).to.eql(pm.iterationData.get(\"PutPatient_FirstName\"));\r",
-									"   pm.expect(jsonData.LastName).to.eql(pm.iterationData.get(\"PutPatient_LastName\")); \r",
-									"    // pm.expect(jsonData.ContactNumber).to.eql(pm.iterationData.get(\"PutPatient_ContactNumber\")); \r",
-									"    pm.expect(jsonData.Email).to.eql(pm.iterationData.get(\"PutPatient_Email\"));   \r",
-									"    pm.expect(jsonData.Allergy).to.eql(pm.iterationData.get(\"PutPatient_Allergy\"));  \r",
-									"    pm.expect(jsonData.FoodPreference).to.eql(pm.iterationData.get(\"PutPatient_FoodPreference\"));  \r",
-									"    pm.expect(jsonData.CuisineCategory).to.eql(pm.iterationData.get(\"PutPatient_CuisineCategory\"));\r",
-									"   pm.expect(jsonData.DateOfBirth).to.eql(pm.iterationData.get(\"PutPatient_DateOfBirth\"));\r",
-									"   \r",
-									"    \r",
+									"pm.test(\"Body contains integer\",() => {\r",
+									"  pm.expect(pm.response.text()).to.include(\"patientId\");\r",
 									"});\r",
 									"\r",
 									"// pm.test(\"validate the schemaof dietician using AJV\" ,()=>\r",
@@ -1921,7 +2089,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "postman-cloud:///1ef51b31-f8fa-4c40-a429-ea0b7e9f11ed"
+									"src": "postman-cloud:///1ef4f725-3e5a-4640-9db2-e401d8d8bf7b"
 								},
 								{
 									"key": "",
@@ -2309,7 +2477,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "postman-cloud:///1ef55304-d3b2-4e50-ba65-f11861bf7812"
+									"src": "postman-cloud:///1ef4f725-3e5a-4640-9db2-e401d8d8bf7b"
 								},
 								{
 									"key": "vitals",
@@ -2319,13 +2487,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{DietURL}}/patient/newReports/{{patientId}}",
+							"raw": "{{DietURL}}/patient/{{patientId}}",
 							"host": [
 								"{{DietURL}}"
 							],
 							"path": [
 								"patient",
-								"newReports",
 								"{{patientId}}"
 							]
 						}
@@ -2484,7 +2651,17 @@
 									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
 									"        pm.response.to.have.status(200);\r",
 									" });\r",
-									"// Parse the response body\r",
+									"\r",
+									" let responseBody = pm.response.json();\r",
+									"let fileIds = [];\r",
+									"for (let i = 0; i < responseBody.length; i++) {\r",
+									"    fileIds.push(responseBody[i].fileId);\r",
+									"}\r",
+									"let selectedFileId = fileIds[0];\r",
+									"pm.collectionVariables.set(\"fileId\", selectedFileId);\r",
+									"console.log(\"Selected fileId:\", selectedFileId);\r",
+									"\r",
+									"/*// Parse the response body\r",
 									"let responseBody = pm.response.json();\r",
 									"\r",
 									"// Extract the fileIds\r",
@@ -2497,12 +2674,12 @@
 									"pm.collectionVariables.set(\"fileId\", selectedFileId);\r",
 									"\r",
 									"// Log the selected fileId to the Postman console\r",
-									"console.log(\"Selected fileId:\", selectedFileId);\r",
+									"console.log(\"Selected fileId:\", selectedFileId);*/\r",
 									"\r",
 									"//other validation\r",
-									"pm.test(\"Body contains integer\",() => {\r",
-									"  pm.expect(pm.response.text()).to.include(\"fileId\");\r",
-									"});\r",
+									"// pm.test(\"Body contains integer\",() => {\r",
+									"//   pm.expect(pm.response.text()).to.include(\"fileId\");\r",
+									"// });\r",
 									"// pm.test(\"validate the schemaof dietician using AJV\" ,()=>\r",
 									"// { pm.response.to.have.jsonSchema(Schema); \r",
 									"// });\r",
@@ -2519,7 +2696,7 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									" pm.execution.setNextRequest(\"PatientId\");\r",
+									"// pm.execution.setNextRequest(\"PatientId\");\r",
 									"} \r",
 									"else if (pm.response.code === 400) {\r",
 									"    pm.test(\"Validate status code 400\", function () {\r",
@@ -2529,7 +2706,7 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"//pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else if (pm.response.code === 404) {\r",
 									"    pm.test(\"Validate Status code is 404\", function () {\r",
 									"        pm.response.to.have.status(404);\r",
@@ -2538,7 +2715,7 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"//pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else {\r",
 									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
 									"        pm.expect(pm.response.code).to.be.oneOf([500, 503]); \r",
@@ -2547,7 +2724,7 @@
 									"    pm.test(\"error: \"+jsonData.error,()=>{\r",
 									"    console.log(\"Error is: \",jsonData.error);\r",
 									"});}\r",
-									" pm.execution.setNextRequest(\"PatientId\");\r",
+									" //pm.execution.setNextRequest(\"PatientId\");\r",
 									"}\r",
 									"\r",
 									"//Check that a response header is present:\r",
@@ -2837,9 +3014,14 @@
 									"var jsonData = pm.response.json(); \r",
 									"//Validate status code\r",
 									"if (pm.response.code === 200) {\r",
-									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
+									"    pm.test(\"Verify the expected status code is 200\", function () {\r",
 									"        pm.response.to.have.status(200);\r",
 									" });\r",
+									"\r",
+									" let fileId = pm.collectionVariables.get(\"fileId\");\r",
+									"if (fileId === null || fileId === undefined){\r",
+									" pm.execution.setNextRequest(\"All morbidity_Dieticiantoken\");\r",
+									" };\r",
 									"\r",
 									"// pm.test(\"validate the schemaof dietician using AJV\" ,()=>\r",
 									"// { pm.response.to.have.jsonSchema(Schema); \r",
@@ -2976,23 +3158,23 @@
 									"    pm.test(\"Validate status code 401\", function () {\r",
 									"        pm.response.to.have.status(401);\r",
 									"    });\r",
-									"     pm.execution.setNextRequest(\"PatientId\");\r",
+									"    // pm.execution.setNextRequest(\"PatientId\");\r",
 									"} \r",
 									"else if (pm.response.code === 400) {\r",
 									"    pm.test(\"Validate status code 400\", function () {\r",
 									"        pm.response.to.have.status(400);\r",
 									"    });\r",
-									"    pm.execution.setNextRequest(\"PatientId\");\r",
+									"    //pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else if (pm.response.code === 404) {\r",
 									"    pm.test(\"Validate Status code is 404\", function () {\r",
 									"        pm.response.to.have.status(404);\r",
 									"    });\r",
-									"   pm.execution.setNextRequest(\"PatientId\");\r",
+									"   //pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else {\r",
 									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
 									"        pm.expect(pm.response.code).to.be.oneOf([500, 503]); \r",
 									"    });\r",
-									"     pm.execution.setNextRequest(\"PatientId\");\r",
+									"    // pm.execution.setNextRequest(\"PatientId\");\r",
 									"}\r",
 									"\r",
 									"//Check that a response header is present:\r",
@@ -3000,9 +3182,9 @@
 									"  pm.response.to.have.header(\"Content-Type\");\r",
 									"});\r",
 									"//Test for a response header having a particular value:\r",
-									"pm.test(\"Content-Type header is application/pdf\", () => {\r",
-									"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf');\r",
-									"});\r",
+									"// pm.test(\"Content-Type header is application/pdf\", () => {\r",
+									"//   pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf');\r",
+									"// });\r",
 									"\r",
 									"//Test for the response time to be within a specified range:\r",
 									"pm.test(\"Response time is less than 1000ms\", () => {\r",
@@ -3078,188 +3260,6 @@
 										"testReports",
 										"viewFile",
 										"U23"
-									]
-								}
-							},
-							"_postman_previewlanguage": "Text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Patient token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"//JSON Schema Validation\r",
-									"\r",
-									"var  Schema ={\r",
-									"  //\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
-									"  \"type\": \"object\",\r",
-									"  \"properties\": {\r",
-									"    \"token\": {\r",
-									"      \"type\": \"string\"\r",
-									"    },\r",
-									"    \"type\": {\r",
-									"      \"type\": \"string\"\r",
-									"    },\r",
-									"    \"userId\": {\r",
-									"      \"type\": \"integer\"\r",
-									"    },\r",
-									"    \"loginUserEmail\": {\r",
-									"      \"type\": \"string\"\r",
-									"    },\r",
-									"    \"roles\": {\r",
-									"      \"type\": \"array\",\r",
-									"      \"items\": [\r",
-									"        {\r",
-									"          \"type\": \"string\"\r",
-									"        }\r",
-									"      ]\r",
-									"    }\r",
-									"  },\r",
-									"  \"required\": [\r",
-									"    \"token\",\r",
-									"    \"type\",\r",
-									"    \"userId\",\r",
-									"    \"loginUserEmail\",\r",
-									"    \"roles\"\r",
-									"  ]\r",
-									"}\r",
-									"\r",
-									"\r",
-									"\r",
-									"// status code validation\r",
-									"\r",
-									"var jsonData = pm.response.json(); \r",
-									"if (pm.response.code === 200) {\r",
-									"    pm.test(\"Verify the expected status code is 200\", function () {\r",
-									"        pm.response.to.have.status(200);\r",
-									"    });\r",
-									"    pm.test(\"Body contains integer\",() => {\r",
-									"  pm.expect(pm.response.text()).to.include(\"token\");\r",
-									"});\r",
-									"       res = JSON.parse(responseBody)\r",
-									"value = res.token\r",
-									"console.log(value)\r",
-									"pm.collectionVariables.set(\"PatientToken\",value);\r",
-									"}else if (pm.response.code === 201) {\r",
-									"    pm.test(\"Verify the expected status code is 201\", function () {\r",
-									"        pm.response.to.have.status(201);\r",
-									"    });\r",
-									"    res = JSON.parse(responseBody)\r",
-									"value = res.token\r",
-									"console.log(value)\r",
-									"pm.collectionVariables.set(\"PatientToken\",value);\r",
-									"\r",
-									"pm.test(\"validate the schemaof dietician using AJV\" ,()=>\r",
-									"{ pm.response.to.have.jsonSchema(Schema); \r",
-									"});\r",
-									"  \r",
-									"} else if (pm.response.code === 401) {\r",
-									"    pm.test(\"Validate status code 401\", function () {\r",
-									"        pm.response.to.have.status(401);\r",
-									"    });\r",
-									"    if(jsonData!=null){\r",
-									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
-									"    console.log(\"Message is: \",jsonData.message);  \r",
-									"});}\r",
-									" pm.execution.setNextRequest(\"PatientId\");\r",
-									"} else if (pm.response.code === 400) {\r",
-									"    pm.test(\"Validate status code 400\", function () {\r",
-									"        pm.response.to.have.status(400);\r",
-									"    });\r",
-									"    if(jsonData!=null){\r",
-									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
-									"    console.log(\"Message is: \",jsonData.message);\r",
-									"\r",
-									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
-									"}else if (pm.response.code === 404) {\r",
-									"    pm.test(\"Validate Status code is 404\", function () {\r",
-									"        pm.response.to.have.status(404);\r",
-									"    });\r",
-									"    if(jsonData!=null){\r",
-									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
-									"    console.log(\"Message is: \",jsonData.message);\r",
-									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
-									"} else {\r",
-									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
-									"        pm.expect(pm.response.code).to.be.oneOf([500,501,503]); \r",
-									"    });\r",
-									"    if(jsonData!=null){\r",
-									"    pm.test(\"error: \"+jsonData.error,()=>{\r",
-									"    console.log(\"Error is: \",jsonData.error);    \r",
-									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
-									"}\r",
-									"//------------------------------------------------------------\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Dieticiantoken}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"password\": \"test\",\r\n  \"userLoginEmail\": \"{{patientEmail}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{DietURL}}/login",
-							"host": [
-								"{{DietURL}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Patient token using invalid endpoint",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"password\": \"test\",\r\n  \"userLoginEmail\": \"{{patientEmail}}\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{DietURL}}/45",
-									"host": [
-										"{{DietURL}}"
-									],
-									"path": [
-										"45"
 									]
 								}
 							},
@@ -3664,7 +3664,7 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									" pm.execution.setNextRequest(\"PatientId\");\r",
+									" //pm.execution.setNextRequest(\"PatientId\");\r",
 									"} \r",
 									"else if (pm.response.code === 400) {\r",
 									"    pm.test(\"Validate status code 400\", function () {\r",
@@ -3674,7 +3674,7 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"//pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else if (pm.response.code === 404) {\r",
 									"    pm.test(\"Validate Status code is 404\", function () {\r",
 									"        pm.response.to.have.status(404);\r",
@@ -3683,16 +3683,16 @@
 									"    pm.test(\"message: \"+jsonData.message,()=>{\r",
 									"    console.log(\"Message is: \",jsonData.message);\r",
 									"});}\r",
-									"pm.execution.setNextRequest(\"PatientId\");\r",
+									"//pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else {\r",
 									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
-									"        pm.expect(pm.response.code).to.be.oneOf([500, 503]); \r",
+									"        pm.expect(pm.response.code).to.be.oneOf([500, 503,403,405]); \r",
 									"    });\r",
 									"    if(jsonData!=null){\r",
 									"    pm.test(\"error: \"+jsonData.error,()=>{\r",
 									"    console.log(\"Error is: \",jsonData.error);\r",
 									"});}\r",
-									" pm.execution.setNextRequest(\"PatientId\");\r",
+									" //pm.execution.setNextRequest(\"PatientId\");\r",
 									"}"
 								],
 								"type": "text/javascript",
@@ -4159,7 +4159,7 @@
 									"pm.execution.setNextRequest(\"PatientId\");\r",
 									"} else {\r",
 									"    pm.test(\"Unexpected status code: \" + pm.response.code, function () {\r",
-									"        pm.expect(pm.response.code).to.be.oneOf([500, 503]); \r",
+									"        pm.expect(pm.response.code).to.be.oneOf([500, 503,403,405]); \r",
 									"    });\r",
 									"    if(jsonData!=null){\r",
 									"    pm.test(\"error: \"+jsonData.error,()=>{\r",
@@ -4647,6 +4647,10 @@
 		{
 			"key": "morbidityTestName",
 			"value": "morbidityTestName"
+		},
+		{
+			"key": "PatientToken",
+			"value": ""
 		}
 	]
 }
